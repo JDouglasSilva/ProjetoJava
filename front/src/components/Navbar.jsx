@@ -37,6 +37,7 @@ const Navbar = ({ user, logout }) => {
           >
             <option value="en">English</option>
             <option value="pt">Português</option>
+            <option value="es">Español</option>
           </Select>
         </Flex>
       </Flex>

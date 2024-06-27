@@ -1,10 +1,12 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { EN } from '../assets/i18n/en';
 import { PT } from '../assets/i18n/pt';
+import { ES } from '../assets/i18n/es';
 
 const translations = {
   en: EN,
-  pt: PT
+  pt: PT,
+  es: ES
 };
 
 export const LanguageContext = createContext();
