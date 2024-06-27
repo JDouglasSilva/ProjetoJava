@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { Box, Button, Input, VStack, Text, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { Box, Button, Input, VStack, Text, FormControl, FormLabel } from '@chakra-ui/react';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { LanguageContext } from '../contexts/LanguageContext';
 
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { strings } = useContext(LanguageContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +20,7 @@ const Login = ({ setUser }) => {
       setUser(user);
       navigate('/home');
     } catch (error) {
-      setError('Invalid credentials. Please try again.');
+      setError(strings.login.error);
     }
   };
 
@@ -27,27 +29,30 @@ const Login = ({ setUser }) => {
       <form onSubmit={handleSubmit}>
         <VStack spacing={4}>
           <FormControl id="email" isInvalid={!!error}>
-            <FormLabel>Email</FormLabel>
+            <FormLabel>{strings.login.email}</FormLabel>
             <Input
               type="email"
-              placeholder="Enter your email"
+              placeholder={strings.login.email}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </FormControl>
           <FormControl id="password" isInvalid={!!error}>
-            <FormLabel>Password</FormLabel>
+            <FormLabel>{strings.login.password}</FormLabel>
             <Input
               type="password"
-              placeholder="Enter your password"
+              placeholder={strings.login.password}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </FormControl>
           <Button type="submit" colorScheme="purple" width="full">
-            Login
+            {strings.login.submit}
           </Button>
           {error && <Text fontSize="sm" color="red.500">{error}</Text>}
+          <Button as={RouterLink} to="/register" colorScheme="blue" width="full" mt={2}>
+            {strings.login.createAccount}
+          </Button>
         </VStack>
       </form>
     </Box>
