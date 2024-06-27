@@ -1,27 +1,62 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Box } from '@chakra-ui/react';
+import axios from 'axios';
+
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Users from './pages/Users'; // Importe o componente Users
+import AuthOutlet from './components/AuthOutlet';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminOutlet from './components/AdminOutlet'; // Importe o componente AdminOutlet
 
 const App = () => {
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const fetchUser = async () => {
+        try {
+          const response = await axios.get('http://localhost:5000/api/users/me', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setUser(response.data);
+        } catch (error) {
+          console.error('Failed to fetch user', error);
+        }
+      };
+      fetchUser();
+    }
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+  };
+
   return (
-    <Router>
+    <BrowserRouter>
       <Box>
-        {user ? (
-          <Box>
-            <h1>Welcome, {user.username}</h1>
-          </Box>
-        ) : (
-          <Routes>
+        <Navbar user={user} logout={logout} />
+        <Routes>
+          <Route element={<ProtectedRoute user={user} />}>
+            <Route path="/home" element={<Home user={user} logout={logout} />} />
+            <Route path="/users" element={<Users />} /> {/* Utilize conforme necessário */}
+            <Route path="/admin/*" element={<AdminOutlet />} /> {/* Utilize conforme necessário */}
+          </Route>
+          <Route element={<AuthOutlet user={user} />}>
             <Route path="/login" element={<Login setUser={setUser} />} />
             <Route path="/register" element={<Register />} />
-          </Routes>
-        )}
+          </Route>
+          <Route path="*" element={<Navigate to={user ? "/home" : "/login"} />} />
+        </Routes>
       </Box>
-    </Router>
+    </BrowserRouter>
   );
 };
 
