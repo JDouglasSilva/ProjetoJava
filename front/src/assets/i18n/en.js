@@ -17,11 +17,17 @@ export const EN = {
     },
     home: {
       welcome: "Welcome, {username}",
-      logout: "Logout"
+      logout: "Logout",
+      functionalities: {
+        urlShortener: "URL Shortener",
+        virtualPantry: "Virtual Pantry"
+      }
     },
     navbar: {
       home: "Home",
-      users: "Users"
+      users: "Users",
+      profile: "Edit Profile",
+      logout: "Logout"
     }
   };
   

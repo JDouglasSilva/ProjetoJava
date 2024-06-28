@@ -11,6 +11,9 @@ import AuthOutlet from './components/AuthOutlet';
 import ProtectedRoute from './components/ProtectedRoute';
 import Users from './pages/Users';
 import AdminOutlet from './components/AdminOutlet';
+import Profile from './pages/Profile';
+import UrlShortener from './pages/tools/UrlShortener';
+import VirtualPantry from './pages/tools/VirtualPantry';
 import { LanguageProvider } from './contexts/LanguageContext';
 
 const App = () => {
@@ -50,6 +53,9 @@ const App = () => {
               <Route path="/home" element={<Home user={user} logout={logout} />} />
               <Route path="/users" element={<Users />} />
               <Route path="/admin/*" element={<AdminOutlet />} />
+              <Route path="/profile" element={<Profile user={user} />} />
+              <Route path="/tools/url-shortener" element={<UrlShortener />} />
+              <Route path="/tools/virtual-pantry" element={<VirtualPantry />} />
             </Route>
             <Route element={<AuthOutlet user={user} />}>
               <Route path="/login" element={<Login setUser={setUser} />} />
