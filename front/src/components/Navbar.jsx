@@ -20,7 +20,7 @@ const Navbar = ({ user, logout }) => {
               <Link as={RouterLink} to="/users" px={2} _hover={{ textDecoration: 'none', color: 'purple.200' }}>
                 {strings.navbar.users}
               </Link>
-              <Button onClick={logout} ml={4} colorScheme="purple" variant="outline" _hover={{ bg: 'purple.700' }}>
+              <Button onClick={logout} ml={4} colorScheme="purple" variant="outline" _hover={{ bg: 'purple.700', color: 'white' }} _focus={{ boxShadow: 'none' }} color="white">
                 {strings.home.logout}
               </Button>
             </>
@@ -30,10 +30,11 @@ const Navbar = ({ user, logout }) => {
             onChange={(e) => setLanguage(e.target.value)}
             ml={4}
             width="130px"
-            bg="purple.600"
-            color="white"
+            bg="white"
+            color="black"
             border="none"
-            _hover={{ bg: 'purple.700' }}
+            _hover={{ bg: 'gray.100' }}
+            _focus={{ bg: 'gray.100' }}
           >
             <option value="en">English</option>
             <option value="pt">Português</option>
