@@ -1,3 +1,5 @@
+//"app/front/src/components/AdminOutlet.jsx"
+
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 

@@ -1,3 +1,5 @@
+//"app/back/src/routes/userRoutes.mjs"
+
 import express from 'express';
 import { registerUser, loginUser } from '../controllers/userController.mjs';
 import jwt from 'jsonwebtoken';

@@ -1,3 +1,5 @@
+//"app/front/src/pages/Register.jsx"
+
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Button, Input, VStack, Text, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';

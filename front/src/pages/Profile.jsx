@@ -1,3 +1,5 @@
+//"app/front/src/pages/Profile.jsx"
+
 import React, { useContext } from 'react';
 import { Box, VStack, Text, Heading } from '@chakra-ui/react';
 import { LanguageContext } from '../contexts/LanguageContext';

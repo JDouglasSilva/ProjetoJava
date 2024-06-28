@@ -1,3 +1,5 @@
+//"app/front/src/components/Navbar.jsx"
+
 import React, { useContext, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Button, Flex, Heading, Link, Spacer, Select, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
