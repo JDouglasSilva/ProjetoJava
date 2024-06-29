@@ -21,7 +21,7 @@ const Home = () => {
               size="lg"
               width="full"
             >
-              {strings.home.functionalities[tool.name]}
+              {strings.home.functionalities[tool.name] || tool.name}
             </Button>
           ))}
         </SimpleGrid>

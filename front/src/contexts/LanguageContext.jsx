@@ -1,5 +1,3 @@
-//"app/front/src/contexts/LanguageContext.jsx"
-
 import React, { createContext, useState, useEffect } from 'react';
 import { EN } from '../assets/i18n/en';
 import { PT } from '../assets/i18n/pt';

@@ -7,19 +7,19 @@ export const PT = {
     error: "Credenciais inválidas. Por favor, tente novamente."
   },
   register: {
-    username: "Nome de Usuário",
+    username: "Nome de usuário",
     email: "Email",
     password: "Senha",
     submit: "Registrar",
     usernameExists: "Nome de usuário já existe. Por favor, tente novamente.",
     emailExists: "Email já existe. Por favor, tente novamente.",
-    fieldRequired: "O campo {field} é obrigatório."
+    fieldRequired: "Campo {field} é obrigatório."
   },
   home: {
     welcome: "Bem-vindo, {username}",
     logout: "Sair",
-    funcionalidades: {
-      urlShortener: "Encurtador de URLs",
+    functionalities: {
+      urlShortener: "Encurtador de URL",
       virtualPantry: "Despensa Virtual"
     }
   },
@@ -43,11 +43,11 @@ export const PT = {
     saveItem: "Salvar Item",
     deleteItem: "Excluir Item",
     editItem: "Editar Item",
-    itemHistory: "Histórico do Item",
+    itemHistory: "Histórico de Itens",
     close: "Fechar",
     deleteConfirmation: "Tem certeza de que deseja excluir a despensa '{pantryName}'?",
     deletedSuccessfully: "excluído com sucesso.",
-    deleteFailed: "Falha ao excluir despensa.",
+    deleteFailed: "Falha ao excluir a despensa.",
     viewPantry: "Ver Despensa",
     loading: "Carregando...",
     actions: "Ações",
@@ -56,7 +56,7 @@ export const PT = {
     editFailed: "Falha ao editar item.",
     addFailed: "Falha ao adicionar item.",
     date: "Data",
-    change: "Alterar",
+    change: "Alteração",
     viewHistory: "Ver Histórico",
     noHistory: "Nenhum histórico disponível para este item."
   }
