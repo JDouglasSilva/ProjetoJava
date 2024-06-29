@@ -54,6 +54,10 @@ export const EN = {
     editedSuccessfully: "Item edited successfully.",
     addedSuccessfully: "Item added successfully.",
     editFailed: "Failed to edit item.",
-    addFailed: "Failed to add item."
+    addFailed: "Failed to add item.",
+    date: "Date",
+    change: "Change",
+    viewHistory: "View History",
+    noHistory: "No history available for this item."
   }
 };

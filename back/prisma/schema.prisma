@@ -39,8 +39,8 @@ model Item {
 model ChangeHistory {
   id        Int      @id @default(autoincrement())
   itemId    Int
-  item      Item     @relation(fields: [itemId], references: [id])
-  quantity  Int
+  change    Int
   date      DateTime @default(now())
+  item      Item     @relation(fields: [itemId], references: [id])
 }
 

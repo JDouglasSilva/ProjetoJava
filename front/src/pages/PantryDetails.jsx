@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, VStack, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, useToast } from '@chakra-ui/react';
 import { LanguageContext } from '../contexts/LanguageContext';
+import HistoryModal from '../components/HistoryModal';
 
 const PantryDetails = () => {
   const { strings } = useContext(LanguageContext);
@@ -14,6 +15,8 @@ const PantryDetails = () => {
   const [lastPurchasePrice, setLastPurchasePrice] = useState(0.0);
   const [editingItem, setEditingItem] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isHistoryOpen, onOpen: onHistoryOpen, onClose: onHistoryClose } = useDisclosure();
+  const [historyItemId, setHistoryItemId] = useState(null);
   const toast = useToast();
 
   useEffect(() => {
@@ -91,7 +94,7 @@ const PantryDetails = () => {
     try {
       let updatedPantry;
       if (editingItem) {
-        await axios.put(`http://localhost:5000/api/pantries/items/${editingItem.id}`, data, {
+        await axios.put(`http://localhost:5000/api/items/${editingItem.id}`, data, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -137,6 +140,11 @@ const PantryDetails = () => {
     }
   };
 
+  const openHistoryModal = (itemId) => {
+    setHistoryItemId(itemId);
+    onHistoryOpen();
+  };
+
   if (!pantry) {
     return <Text>{strings.pantry.loading}</Text>;
   }
@@ -164,7 +172,8 @@ const PantryDetails = () => {
                 <Td>{item.lastPurchasePrice}</Td>
                 <Td>
                   <Button size="sm" colorScheme="blue" mr="2" onClick={() => openEditItemModal(item)}>{strings.pantry.editItem}</Button>
-                  <Button size="sm" colorScheme="red" onClick={() => handleDeleteItem(item.id)}>{strings.pantry.deleteItem}</Button>
+                  <Button size="sm" colorScheme="red" mr="2" onClick={() => handleDeleteItem(item.id)}>{strings.pantry.deleteItem}</Button>
+                  <Button size="sm" colorScheme="purple" onClick={() => openHistoryModal(item.id)}>{strings.pantry.viewHistory}</Button>
                 </Td>
               </Tr>
             ))}
@@ -214,6 +223,13 @@ const PantryDetails = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+
+      <HistoryModal
+        isOpen={isHistoryOpen}
+        onClose={onHistoryClose}
+        itemId={historyItemId}
+        strings={strings}
+      />
     </Box>
   );
 };
