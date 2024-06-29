@@ -8,7 +8,11 @@ import itemRoutes from './routes/itemRoutes.mjs';
 const app = express();
 const prisma = new PrismaClient();
 
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json()); // Middleware para parsing de JSON deve vir antes das rotas
 
 app.use('/api/users', userRoutes);
