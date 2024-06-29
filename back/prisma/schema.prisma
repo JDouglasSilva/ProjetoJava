@@ -9,10 +9,38 @@ datasource db {
   url      = "file:./dev.db" //Mudar Futuramenta para o .env
   //url      = env("DATABASE_URL")
 }
-
 model User {
-  id       Int    @id @default(autoincrement())
-  username String @unique
-  email    String @unique
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  email    String   @unique
   password String
+  pantries Pantry[]
 }
+
+model Pantry {
+  id      Int    @id @default(autoincrement())
+  name    String
+  userId  Int
+  user    User   @relation(fields: [userId], references: [id])
+  items   Item[]
+}
+
+model Item {
+  id                Int             @id @default(autoincrement())
+  name              String
+  currentQuantity   Int
+  desiredQuantity   Int
+  lastPurchasePrice Float
+  pantryId          Int
+  pantry            Pantry          @relation(fields: [pantryId], references: [id])
+  changeHistory     ChangeHistory[]
+}
+
+model ChangeHistory {
+  id        Int      @id @default(autoincrement())
+  itemId    Int
+  item      Item     @relation(fields: [itemId], references: [id])
+  quantity  Int
+  date      DateTime @default(now())
+}
+

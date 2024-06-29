@@ -1,5 +1,3 @@
-//"app/front/src/pages/Home.jsx"
-
 import React, { useContext } from 'react';
 import { Box, Button, SimpleGrid, Text, VStack } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
