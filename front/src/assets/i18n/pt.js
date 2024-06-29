@@ -54,6 +54,10 @@ export const PT = {
     editedSuccessfully: "Item editado com sucesso.",
     addedSuccessfully: "Item adicionado com sucesso.",
     editFailed: "Falha ao editar item.",
-    addFailed: "Falha ao adicionar item."
+    addFailed: "Falha ao adicionar item.",
+    date: "Data",
+    change: "Alterar",
+    viewHistory: "Ver Histórico",
+    noHistory: "Nenhum histórico disponível para este item."
   }
 };

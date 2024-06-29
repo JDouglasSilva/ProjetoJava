@@ -26,13 +26,6 @@ export const addItem = async (req, res) => {
         },
       });
   
-      await prisma.changeHistory.create({
-        data: {
-          itemId: item.id,
-          quantity: currentQuantity,
-        },
-      });
-  
       res.status(201).json(item);
     } catch (error) {
       console.error(error); // Adicione esta linha para logar o erro no servidor
