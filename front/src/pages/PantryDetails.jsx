@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, VStack, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, useToast, Flex, Icon } from '@chakra-ui/react';
 import { TriangleUpIcon, TriangleDownIcon } from '@chakra-ui/icons';
-import ReactPaginate from 'react-paginate';
 import { LanguageContext } from '../contexts/LanguageContext';
 import HistoryModal from '../components/HistoryModal';
 
@@ -237,17 +236,24 @@ const PantryDetails = () => {
             ))}
           </Tbody>
         </Table>
-        <ReactPaginate
-          previousLabel={'← Previous'}
-          nextLabel={'Next →'}
-          breakLabel={'...'}
-          pageCount={Math.ceil(pantry.items.length / itemsPerPage)}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          containerClassName={'pagination'}
-          activeClassName={'active'}
-        />
+        <Flex mt={4} justify="center">
+          <Button onClick={() => handlePageClick({ selected: currentPage - 1 })} isDisabled={currentPage === 0} mr={2}>
+            ← Previous
+          </Button>
+          {[...Array(Math.ceil(pantry.items.length / itemsPerPage)).keys()].map(page => (
+            <Button
+              key={page}
+              onClick={() => handlePageClick({ selected: page })}
+              isActive={currentPage === page}
+              mx={1}
+            >
+              {page + 1}
+            </Button>
+          ))}
+          <Button onClick={() => handlePageClick({ selected: currentPage + 1 })} isDisabled={currentPage === Math.ceil(pantry.items.length / itemsPerPage) - 1} ml={2}>
+            Next →
+          </Button>
+        </Flex>
         <Button mt="4" colorScheme="teal" onClick={openAddItemModal}>{strings.pantry.addItem}</Button>
       </VStack>
 

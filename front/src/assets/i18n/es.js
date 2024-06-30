@@ -59,5 +59,9 @@ export const ES = {
     change: "Cambio",
     viewHistory: "Ver Historial",
     noHistory: "No hay historial disponible para este artículo."
+  },
+  pagination: {
+    previous: "← Anterior",
+    next: "Siguiente →"
   }
 };

@@ -59,5 +59,9 @@ export const PT = {
     change: "Alteração",
     viewHistory: "Ver Histórico",
     noHistory: "Nenhum histórico disponível para este item."
+  },
+  pagination: {
+    previous: "← Anterior",
+    next: "Próximo →"
   }
 };

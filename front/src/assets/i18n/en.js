@@ -61,5 +61,9 @@ export const EN = {
     change: "Change",
     viewHistory: "View History",
     noHistory: "No history available for this item."
+  },
+  pagination: {
+    previous: "← Previous",
+    next: "Next →"
   }
 };
