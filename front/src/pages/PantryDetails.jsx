@@ -1,3 +1,5 @@
+//"app/front/src/pages/PantryDetails.jsx"
+
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';

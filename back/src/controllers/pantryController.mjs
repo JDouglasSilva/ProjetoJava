@@ -1,3 +1,6 @@
+//"app/back/src/controllers/pantryController.mjs"
+
+
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();

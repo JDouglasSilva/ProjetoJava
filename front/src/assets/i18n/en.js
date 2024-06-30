@@ -1,3 +1,5 @@
+//"app/front/src/assets/i18n/en.js"
+
 export const EN = {
   login: {
     email: "Email",

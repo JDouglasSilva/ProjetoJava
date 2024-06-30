@@ -1,3 +1,6 @@
+//"app/front/src/pages/Pantries.jsx"
+
+
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { Box, Button, Input, VStack, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, useToast, Flex } from '@chakra-ui/react';

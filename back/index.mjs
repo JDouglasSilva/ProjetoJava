@@ -1,9 +1,11 @@
+//"app/back/index.mjs"
+
 import express from 'express';
 import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
-import userRoutes from './routes/userRoutes.mjs';
-import pantryRoutes from './routes/pantryRoutes.mjs';
-import itemRoutes from './routes/itemRoutes.mjs';
+import userRoutes from './src/routes/userRoutes.mjs';
+import pantryRoutes from './src/routes/pantryRoutes.mjs';
+import itemRoutes from './src/routes/itemRoutes.mjs';
 
 const app = express();
 const prisma = new PrismaClient();

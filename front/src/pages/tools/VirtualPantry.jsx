@@ -1,3 +1,5 @@
+//"app/front/src/pages/tools/VirtualPantry.jsx"
+
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { Box, Button, Input, VStack, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, HStack } from '@chakra-ui/react';

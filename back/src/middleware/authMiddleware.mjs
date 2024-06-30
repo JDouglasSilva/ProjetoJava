@@ -1,3 +1,5 @@
+//"app/back/src/middleware/authMiddleware.mjs"
+
 import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || '1vB$4zM7n@9!B2xE5rU8fT3wQ0#G6lK4'; // Mudar futuramente para o .env
 
