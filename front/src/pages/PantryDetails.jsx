@@ -10,9 +10,9 @@ const PantryDetails = () => {
   const { id } = useParams();
   const [pantry, setPantry] = useState(null);
   const [itemName, setItemName] = useState('');
-  const [currentQuantity, setCurrentQuantity] = useState(0);
-  const [desiredQuantity, setDesiredQuantity] = useState(0);
-  const [lastPurchasePrice, setLastPurchasePrice] = useState(0.0);
+  const [currentQuantity, setCurrentQuantity] = useState('');
+  const [desiredQuantity, setDesiredQuantity] = useState('');
+  const [lastPurchasePrice, setLastPurchasePrice] = useState('');
   const [editingItem, setEditingItem] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isHistoryOpen, onOpen: onHistoryOpen, onClose: onHistoryClose } = useDisclosure();
@@ -36,18 +36,18 @@ const PantryDetails = () => {
   const openAddItemModal = () => {
     setEditingItem(null);
     setItemName('');
-    setCurrentQuantity(0);
-    setDesiredQuantity(0);
-    setLastPurchasePrice(0.0);
+    setCurrentQuantity('');
+    setDesiredQuantity('');
+    setLastPurchasePrice('');
     onOpen();
   };
 
   const openEditItemModal = (item) => {
     setEditingItem(item);
     setItemName(item.name);
-    setCurrentQuantity(item.currentQuantity);
-    setDesiredQuantity(item.desiredQuantity);
-    setLastPurchasePrice(item.lastPurchasePrice);
+    setCurrentQuantity(item.currentQuantity.toString());
+    setDesiredQuantity(item.desiredQuantity.toString());
+    setLastPurchasePrice(item.lastPurchasePrice.toString());
     onOpen();
   };
 
@@ -117,9 +117,9 @@ const PantryDetails = () => {
       setPantry(updatedPantry);
       onClose();
       setItemName('');
-      setCurrentQuantity(0);
-      setDesiredQuantity(0);
-      setLastPurchasePrice(0.0);
+      setCurrentQuantity('');
+      setDesiredQuantity('');
+      setLastPurchasePrice('');
       setEditingItem(null);
       toast({
         title: editingItem ? strings.pantry.editItem : strings.pantry.addItem,
@@ -198,19 +198,19 @@ const PantryDetails = () => {
                 placeholder={strings.pantry.currentQuantity}
                 type="number"
                 value={currentQuantity}
-                onChange={(e) => setCurrentQuantity(parseInt(e.target.value))}
+                onChange={(e) => setCurrentQuantity(e.target.value)}
               />
               <Input
                 placeholder={strings.pantry.desiredQuantity}
                 type="number"
                 value={desiredQuantity}
-                onChange={(e) => setDesiredQuantity(parseInt(e.target.value))}
+                onChange={(e) => setDesiredQuantity(e.target.value)}
               />
               <Input
                 placeholder={strings.pantry.lastPurchasePrice}
                 type="number"
                 value={lastPurchasePrice}
-                onChange={(e) => setLastPurchasePrice(parseFloat(e.target.value))}
+                onChange={(e) => setLastPurchasePrice(e.target.value)}
               />
             </VStack>
           </ModalBody>

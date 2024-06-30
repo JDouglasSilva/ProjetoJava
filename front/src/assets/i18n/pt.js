@@ -1,6 +1,6 @@
 export const PT = {
   login: {
-    email: "Email",
+    email: "E-mail",
     password: "Senha",
     submit: "Entrar",
     createAccount: "Criar Conta",
@@ -8,7 +8,7 @@ export const PT = {
   },
   register: {
     username: "Nome de usuário",
-    email: "Email",
+    email: "E-mail",
     password: "Senha",
     submit: "Registrar",
     usernameExists: "Nome de usuário já existe. Por favor, tente novamente.",

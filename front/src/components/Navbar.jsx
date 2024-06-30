@@ -1,8 +1,6 @@
-//"app/front/src/components/Navbar.jsx"
-
 import React, { useContext, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button, Flex, Heading, Link, Spacer, Select, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Link, Spacer, Menu, MenuButton, MenuList, MenuItem, Image } from '@chakra-ui/react';
 import { LanguageContext } from '../contexts/LanguageContext';
 
 const Navbar = ({ user, logout }) => {
@@ -10,6 +8,18 @@ const Navbar = ({ user, logout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuToggle = () => setIsMenuOpen(!isMenuOpen);
+
+  const languageIcons = {
+    en: '/src/assets/images/eua.png',
+    pt: '/src/assets/images/brasil.png',
+    es: '/src/assets/images/espanha.png',
+  };
+
+  const languageLabels = {
+    en: 'English',
+    pt: 'Português',
+    es: 'Español',
+  };
 
   return (
     <Box bg="purple.600" px={4} py={2} color="white">
@@ -36,21 +46,26 @@ const Navbar = ({ user, logout }) => {
               </Menu>
             </>
           )}
-          <Select
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            ml={4}
-            width="130px"
-            bg="white"
-            color="black"
-            border="none"
-            _hover={{ bg: 'gray.100' }}
-            _focus={{ bg: 'gray.100' }}
-          >
-            <option value="en">English</option>
-            <option value="pt">Português</option>
-            <option value="es">Español</option>
-          </Select>
+          <Menu>
+            <MenuButton as={Button} ml={4} variant="outline" _hover={{ bg: 'purple.700', color: 'white' }} _focus={{ boxShadow: 'none' }}>
+              <Image src={languageIcons[language]} alt={languageLabels[language]} boxSize="32px" />
+            </MenuButton>
+            <MenuList>
+              {Object.keys(languageIcons).map((lang) => (
+                <MenuItem 
+                  key={lang} 
+                  onClick={() => setLanguage(lang)} 
+                  _hover={{ bg: 'purple.100' }} 
+                  _focus={{ bg: 'purple.100' }} 
+                  _active={{ bg: 'purple.200' }} 
+                  color="black"  // Adiciona cor ao texto
+                >
+                  <Image src={languageIcons[lang]} alt={languageLabels[lang]} boxSize="32px" mr={2} />
+                  {languageLabels[lang]}
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
         </Flex>
       </Flex>
     </Box>
