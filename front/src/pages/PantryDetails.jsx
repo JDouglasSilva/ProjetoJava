@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, VStack, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, useToast } from '@chakra-ui/react';
+import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, VStack, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, useToast, Flex, Icon } from '@chakra-ui/react';
+import { TriangleUpIcon, TriangleDownIcon } from '@chakra-ui/icons';
 import { LanguageContext } from '../contexts/LanguageContext';
 import HistoryModal from '../components/HistoryModal';
 
@@ -19,6 +20,9 @@ const PantryDetails = () => {
   const [historyItemId, setHistoryItemId] = useState(null);
   const toast = useToast();
 
+  const [sortColumn, setSortColumn] = useState('name');
+  const [sortDirection, setSortDirection] = useState('asc');
+
   useEffect(() => {
     const fetchPantry = async () => {
       const token = localStorage.getItem('token');
@@ -28,6 +32,7 @@ const PantryDetails = () => {
         },
       });
       setPantry(response.data);
+      sortItems('name', 'asc'); // Ordenar os itens alfabeticamente ao carregar
     };
 
     fetchPantry();
@@ -128,6 +133,7 @@ const PantryDetails = () => {
         duration: 5000,
         isClosable: true,
       });
+      sortItems(sortColumn, sortDirection); // Ordenar os itens após adicionar ou editar
     } catch (error) {
       console.error("Error adding or editing item:", error);
       toast({
@@ -145,6 +151,30 @@ const PantryDetails = () => {
     onHistoryOpen();
   };
 
+  const handleSort = (column) => {
+    const direction = sortColumn === column && sortDirection === 'asc' ? 'desc' : 'asc';
+    setSortColumn(column);
+    setSortDirection(direction);
+    sortItems(column, direction);
+  };
+
+  const sortItems = (column, direction) => {
+    const sortedItems = [...pantry.items].sort((a, b) => {
+      if (a[column] < b[column]) return direction === 'asc' ? -1 : 1;
+      if (a[column] > b[column]) return direction === 'asc' ? 1 : -1;
+      return 0;
+    });
+    setPantry({
+      ...pantry,
+      items: sortedItems
+    });
+  };
+
+  const getSortIcon = (column) => {
+    if (sortColumn !== column) return null;
+    return sortDirection === 'asc' ? <TriangleUpIcon ml={2} /> : <TriangleDownIcon ml={2} />;
+  };
+
   if (!pantry) {
     return <Text>{strings.pantry.loading}</Text>;
   }
@@ -156,10 +186,26 @@ const PantryDetails = () => {
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>{strings.pantry.itemName}</Th>
-              <Th>{strings.pantry.currentQuantity}</Th>
-              <Th>{strings.pantry.desiredQuantity}</Th>
-              <Th>{strings.pantry.lastPurchasePrice}</Th>
+              <Th onClick={() => handleSort('name')}>
+                <Flex align="center">
+                  {strings.pantry.itemName} {getSortIcon('name')}
+                </Flex>
+              </Th>
+              <Th onClick={() => handleSort('currentQuantity')}>
+                <Flex align="center">
+                  {strings.pantry.currentQuantity} {getSortIcon('currentQuantity')}
+                </Flex>
+              </Th>
+              <Th onClick={() => handleSort('desiredQuantity')}>
+                <Flex align="center">
+                  {strings.pantry.desiredQuantity} {getSortIcon('desiredQuantity')}
+                </Flex>
+              </Th>
+              <Th onClick={() => handleSort('lastPurchasePrice')}>
+                <Flex align="center">
+                  {strings.pantry.lastPurchasePrice} {getSortIcon('lastPurchasePrice')}
+                </Flex>
+              </Th>
               <Th>{strings.pantry.actions}</Th>
             </Tr>
           </Thead>
