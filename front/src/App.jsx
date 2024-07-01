@@ -17,8 +17,8 @@ import Profile from './pages/Profile';
 import UrlShortener from './pages/tools/UrlShortener';
 import VirtualPantry from './pages/tools/VirtualPantry';
 import { LanguageProvider } from './contexts/LanguageContext';
-import Pantries from './pages/Pantries';
-import PantryDetails from './pages/PantryDetails';
+import Pantries from './pages/Despensa/Pantries';
+import PantryDetails from './pages/Despensa/PantryDetails';
 
 const App = () => {
   const [user, setUser] = useState(null);

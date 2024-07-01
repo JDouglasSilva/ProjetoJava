@@ -1,6 +1,5 @@
 //"app/back/src/routes/pantryRoutes.mjs"
 
-
 import express from 'express';
 import { createPantry, getPantries, getPantry, updatePantry, deletePantry } from '../controllers/pantryController.mjs';
 import { addItem, updateItem, deleteItem, getItemHistory } from '../controllers/itemController.mjs';

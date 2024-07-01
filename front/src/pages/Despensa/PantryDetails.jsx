@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, VStack, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, useToast, Flex, Icon } from '@chakra-ui/react';
+import { Box, Button, Table, Thead, Tbody, Tr, Th, VStack, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Input, useToast, Flex, Icon } from '@chakra-ui/react';
 import { TriangleUpIcon, TriangleDownIcon } from '@chakra-ui/icons';
-import { LanguageContext } from '../contexts/LanguageContext';
-import HistoryModal from '../components/HistoryModal';
+import { LanguageContext } from '../../contexts/LanguageContext';
+import HistoryModal from '../../components/Despensa/HistoryModal';
+import CalculateModal from '../../components/Despensa/CalculateModal';
+import PantryItem from '../../components/Despensa/PantryItem';
 
 const PantryDetails = () => {
   const { strings } = useContext(LanguageContext);
@@ -19,7 +21,7 @@ const PantryDetails = () => {
   const { isOpen: isHistoryOpen, onOpen: onHistoryOpen, onClose: onHistoryClose } = useDisclosure();
   const { isOpen: isCalcOpen, onOpen: onCalcOpen, onClose: onCalcClose } = useDisclosure();
   const [calcItems, setCalcItems] = useState([]);
-  const [historyItemId, setHistoryItemId] = useState(null); // Definindo historyItemId no estado
+  const [historyItemId, setHistoryItemId] = useState(null);
   const toast = useToast();
   const [sortColumn, setSortColumn] = useState('name');
   const [sortDirection, setSortDirection] = useState('asc');
@@ -36,7 +38,7 @@ const PantryDetails = () => {
         },
       });
       setPantry(response.data);
-      sortItems(response.data.items, 'name', 'asc'); // Ordenar os itens alfabeticamente ao carregar
+      sortItems(response.data.items, 'name', 'asc');
     };
 
     fetchPantry();
@@ -137,7 +139,7 @@ const PantryDetails = () => {
         duration: 5000,
         isClosable: true,
       });
-      sortItems(updatedPantry.items, sortColumn, sortDirection); // Ordenar os itens após adicionar ou editar
+      sortItems(updatedPantry.items, sortColumn, sortDirection);
     } catch (error) {
       console.error("Error adding or editing item:", error);
       toast({
@@ -239,17 +241,14 @@ const PantryDetails = () => {
           </Thead>
           <Tbody>
             {paginatedItems?.map((item) => (
-              <Tr key={item.id}>
-                <Td>{item.name}</Td>
-                <Td>{item.currentQuantity}</Td>
-                <Td>{item.desiredQuantity}</Td>
-                <Td>{item.lastPurchasePrice}</Td>
-                <Td>
-                  <Button size="sm" colorScheme="blue" mr="2" onClick={() => openEditItemModal(item)}>{strings.pantry.editItem}</Button>
-                  <Button size="sm" colorScheme="red" mr="2" onClick={() => handleDeleteItem(item.id)}>{strings.pantry.deleteItem}</Button>
-                  <Button size="sm" colorScheme="purple" onClick={() => openHistoryModal(item.id)}>{strings.pantry.viewHistory}</Button>
-                </Td>
-              </Tr>
+              <PantryItem
+                key={item.id}
+                item={item}
+                strings={strings}
+                openEditItemModal={openEditItemModal}
+                handleDeleteItem={handleDeleteItem}
+                openHistoryModal={openHistoryModal}
+              />
             ))}
           </Tbody>
         </Table>
@@ -271,7 +270,7 @@ const PantryDetails = () => {
             {strings.pagination.next}
           </Button>
         </Flex>
-        <Flex mt="4" justify="space-between" width="100%">
+        <Flex mt="4" justify="center" width="100%" gap="4">
           <Button colorScheme="teal" onClick={openAddItemModal}>{strings.pantry.addItem}</Button>
           <Button colorScheme="blue" onClick={calculatePurchase}>{strings.pantry.calculatePurchase}</Button>
         </Flex>
@@ -326,40 +325,12 @@ const PantryDetails = () => {
         strings={strings}
       />
 
-      <Modal isOpen={isCalcOpen} onClose={onCalcClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{strings.pantry.calculatePurchase}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Table variant="simple">
-              <Thead>
-                <Tr>
-                  <Th>{strings.pantry.itemName}</Th>
-                  <Th>{strings.pantry.quantityToBuy}</Th>
-                  <Th>{strings.pantry.price}</Th>
-                  <Th>{strings.pantry.totalPrice}</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {calcItems.itemsToBuy?.map((item, index) => (
-                  <Tr key={index}>
-                    <Td>{item.name}</Td>
-                    <Td>{item.quantityToBuy}</Td>
-                    <Td>{item.price}</Td>
-                    <Td>{item.totalPrice}</Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-            <Text mt={4} fontWeight="bold">{`${strings.pantry.totalToSpend}: ${calcItems.totalPrice}`}</Text>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button variant="ghost" onClick={onCalcClose}>{strings.pantry.close}</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <CalculateModal
+        isOpen={isCalcOpen}
+        onClose={onCalcClose}
+        calcItems={calcItems}
+        strings={strings}
+      />
     </Box>
   );
 };

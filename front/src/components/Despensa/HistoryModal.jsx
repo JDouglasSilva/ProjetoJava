@@ -1,8 +1,5 @@
-//"app/front/src/components/HistoryModal.jsx"
-
-
 import React, { useEffect, useState } from 'react';
-import { Box, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Table, Thead, Tbody, Tr, Th, Td, useDisclosure, Text } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Table, Thead, Tbody, Tr, Th, Td, Text } from '@chakra-ui/react';
 import axios from 'axios';
 
 const HistoryModal = ({ isOpen, onClose, itemId, strings }) => {

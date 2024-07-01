@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { Box, Button, Input, VStack, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, useToast, SimpleGrid, HStack } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import { LanguageContext } from '../contexts/LanguageContext';
+import { LanguageContext } from '../../contexts/LanguageContext';
 
 const Pantries = () => {
   const { strings } = useContext(LanguageContext);
