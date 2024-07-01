@@ -1,9 +1,6 @@
-//"app/front/src/pages/Pantries.jsx"
-
-
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { Box, Button, Input, VStack, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, useToast, Flex } from '@chakra-ui/react';
+import { Box, Button, Input, VStack, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, useToast, SimpleGrid } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { LanguageContext } from '../contexts/LanguageContext';
 
@@ -77,14 +74,14 @@ const Pantries = () => {
 
   return (
     <Box>
-      <VStack>
+      <VStack spacing={4}>
         <Input
           placeholder={strings.pantry.pantryName}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <Button onClick={handleCreatePantry}>{strings.pantry.createPantry}</Button>
-        <Box>
+        <SimpleGrid columns={[1, 2, 3]} spacing={4} mt={4}>
           {pantries.map((pantry) => (
             <Box key={pantry.id} borderWidth="1px" borderRadius="lg" p="4" m="4" boxShadow="md" textAlign="center">
               <Text fontSize="xl" fontWeight="bold" mb="4">{pantry.name}</Text>
@@ -98,7 +95,7 @@ const Pantries = () => {
               </VStack>
             </Box>
           ))}
-        </Box>
+        </SimpleGrid>
       </VStack>
 
       <Modal isOpen={isDeleteOpen} onClose={onDeleteClose}>
