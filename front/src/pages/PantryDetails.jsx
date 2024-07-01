@@ -238,7 +238,7 @@ const PantryDetails = () => {
         </Table>
         <Flex mt={4} justify="center">
           <Button onClick={() => handlePageClick({ selected: currentPage - 1 })} isDisabled={currentPage === 0} mr={2}>
-            ← Previous
+            {strings.pagination.previous}
           </Button>
           {[...Array(Math.ceil(pantry.items.length / itemsPerPage)).keys()].map(page => (
             <Button
@@ -251,7 +251,7 @@ const PantryDetails = () => {
             </Button>
           ))}
           <Button onClick={() => handlePageClick({ selected: currentPage + 1 })} isDisabled={currentPage === Math.ceil(pantry.items.length / itemsPerPage) - 1} ml={2}>
-            Next →
+            {strings.pagination.next}
           </Button>
         </Flex>
         <Button mt="4" colorScheme="teal" onClick={openAddItemModal}>{strings.pantry.addItem}</Button>
