@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { Box, Button, Input, VStack, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, useToast, SimpleGrid } from '@chakra-ui/react';
+import { Box, Button, Input, VStack, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, useToast, SimpleGrid, HStack } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { LanguageContext } from '../contexts/LanguageContext';
 
@@ -17,12 +17,20 @@ const Pantries = () => {
   useEffect(() => {
     const fetchPantries = async () => {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/pantries', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setPantries(response.data);
+      if (!token) {
+        console.error("No token found");
+        return;
+      }
+      try {
+        const response = await axios.get('http://localhost:5000/api/pantries', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setPantries(response.data);
+      } catch (error) {
+        console.error("Failed to fetch pantries:", error);
+      }
     };
 
     fetchPantries();
@@ -30,16 +38,28 @@ const Pantries = () => {
 
   const handleCreatePantry = async () => {
     const token = localStorage.getItem('token');
-    const response = await axios.post('http://localhost:5000/api/pantries', { name }, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setPantries([...pantries, response.data]);
+    if (!token) {
+      console.error("No token found");
+      return;
+    }
+    try {
+      const response = await axios.post('http://localhost:5000/api/pantries', { name }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setPantries([...pantries, response.data]);
+    } catch (error) {
+      console.error("Failed to create pantry:", error);
+    }
   };
 
   const handleDeletePantry = async () => {
     const token = localStorage.getItem('token');
+    if (!token) {
+      console.error("No token found");
+      return;
+    }
     try {
       await axios.delete(`http://localhost:5000/api/pantries/${pantryToDelete.id}`, {
         headers: {
@@ -75,12 +95,14 @@ const Pantries = () => {
   return (
     <Box>
       <VStack spacing={4}>
-        <Input
-          placeholder={strings.pantry.pantryName}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Button onClick={handleCreatePantry}>{strings.pantry.createPantry}</Button>
+        <HStack width="full">
+          <Input
+            placeholder={strings.pantry.pantryName}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Button onClick={handleCreatePantry}>{strings.pantry.createPantry}</Button>
+        </HStack>
         <SimpleGrid columns={[1, 2, 3]} spacing={4} mt={4}>
           {pantries.map((pantry) => (
             <Box key={pantry.id} borderWidth="1px" borderRadius="lg" p="4" m="4" boxShadow="md" textAlign="center">

@@ -36,6 +36,7 @@ export const PT = {
     editPantry: "Editar Despensa",
     deletePantry: "Excluir Despensa",
     addItem: "Adicionar Item",
+    calculatePurchase: "Calcular Compra",
     itemName: "Nome do Item",
     currentQuantity: "Quantidade Atual",
     desiredQuantity: "Quantidade Desejada",
@@ -58,7 +59,11 @@ export const PT = {
     date: "Data",
     change: "Alteração",
     viewHistory: "Ver Histórico",
-    noHistory: "Nenhum histórico disponível para este item."
+    noHistory: "Nenhum histórico disponível para este item.",
+    quantityToBuy: "Quantidade a comprar",
+    price: "Preço",
+    totalPrice: "Preço Total",
+    totalToSpend: "Total a gastar"
   },
   pagination: {
     previous: "← Anterior",

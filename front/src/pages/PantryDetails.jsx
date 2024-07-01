@@ -17,7 +17,9 @@ const PantryDetails = () => {
   const [editingItem, setEditingItem] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isHistoryOpen, onOpen: onHistoryOpen, onClose: onHistoryClose } = useDisclosure();
-  const [historyItemId, setHistoryItemId] = useState(null);
+  const { isOpen: isCalcOpen, onOpen: onCalcOpen, onClose: onCalcClose } = useDisclosure();
+  const [calcItems, setCalcItems] = useState([]);
+  const [historyItemId, setHistoryItemId] = useState(null); // Definindo historyItemId no estado
   const toast = useToast();
   const [sortColumn, setSortColumn] = useState('name');
   const [sortDirection, setSortDirection] = useState('asc');
@@ -186,6 +188,21 @@ const PantryDetails = () => {
     currentPage * itemsPerPage + itemsPerPage
   );
 
+  const calculatePurchase = () => {
+    const itemsToBuy = pantry.items
+      .filter(item => item.currentQuantity < item.desiredQuantity)
+      .map(item => ({
+        name: item.name,
+        quantityToBuy: item.desiredQuantity - item.currentQuantity,
+        price: item.lastPurchasePrice,
+        totalPrice: (item.desiredQuantity - item.currentQuantity) * item.lastPurchasePrice
+      }));
+
+    const totalPrice = itemsToBuy.reduce((sum, item) => sum + item.totalPrice, 0);
+    setCalcItems({ itemsToBuy, totalPrice });
+    onCalcOpen();
+  };
+
   if (!pantry) {
     return <Text>{strings.pantry.loading}</Text>;
   }
@@ -254,7 +271,10 @@ const PantryDetails = () => {
             {strings.pagination.next}
           </Button>
         </Flex>
-        <Button mt="4" colorScheme="teal" onClick={openAddItemModal}>{strings.pantry.addItem}</Button>
+        <Flex mt="4" justify="space-between" width="100%">
+          <Button colorScheme="teal" onClick={openAddItemModal}>{strings.pantry.addItem}</Button>
+          <Button colorScheme="blue" onClick={calculatePurchase}>{strings.pantry.calculatePurchase}</Button>
+        </Flex>
       </VStack>
 
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -305,6 +325,41 @@ const PantryDetails = () => {
         itemId={historyItemId}
         strings={strings}
       />
+
+      <Modal isOpen={isCalcOpen} onClose={onCalcClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{strings.pantry.calculatePurchase}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Table variant="simple">
+              <Thead>
+                <Tr>
+                  <Th>{strings.pantry.itemName}</Th>
+                  <Th>{strings.pantry.quantityToBuy}</Th>
+                  <Th>{strings.pantry.price}</Th>
+                  <Th>{strings.pantry.totalPrice}</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {calcItems.itemsToBuy?.map((item, index) => (
+                  <Tr key={index}>
+                    <Td>{item.name}</Td>
+                    <Td>{item.quantityToBuy}</Td>
+                    <Td>{item.price}</Td>
+                    <Td>{item.totalPrice}</Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+            <Text mt={4} fontWeight="bold">{`${strings.pantry.totalToSpend}: ${calcItems.totalPrice}`}</Text>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button variant="ghost" onClick={onCalcClose}>{strings.pantry.close}</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

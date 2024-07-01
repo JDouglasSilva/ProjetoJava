@@ -38,6 +38,7 @@ export const EN = {
     editPantry: "Edit Pantry",
     deletePantry: "Delete Pantry",
     addItem: "Add Item",
+    calculatePurchase: "Calculate Purchase",
     itemName: "Item Name",
     currentQuantity: "Current Quantity",
     desiredQuantity: "Desired Quantity",
@@ -60,7 +61,11 @@ export const EN = {
     date: "Date",
     change: "Change",
     viewHistory: "View History",
-    noHistory: "No history available for this item."
+    noHistory: "No history available for this item.",
+    quantityToBuy: "Quantity to Buy",
+    price: "Price",
+    totalPrice: "Total Price",
+    totalToSpend: "Total to Spend"
   },
   pagination: {
     previous: "← Previous",
