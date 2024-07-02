@@ -213,7 +213,7 @@ const PantryDetails = () => {
     <Box>
       <VStack>
         <Text fontSize="2xl" fontWeight="bold">{pantry.name}</Text>
-        <Table variant="simple">
+        <Table variant="striped">
           <Thead>
             <Tr>
               <Th onClick={() => handleSort('name')}>

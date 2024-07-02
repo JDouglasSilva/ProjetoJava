@@ -3,6 +3,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
+{/* Área de administração, ainda não utilizada*/}
 const AdminOutlet = () => {
   return (
     <div>

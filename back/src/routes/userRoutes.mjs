@@ -12,7 +12,6 @@ const JWT_SECRET = '1vB$4zM7n@9!B2xE5rU8fT3wQ0#G6lK4';
 // Inicializa o cliente Prisma
 const prisma = new PrismaClient();
 
-//Cadastro e login de usuarios
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 
@@ -26,9 +25,8 @@ router.get('/me', async (req, res) => {
   }
 
   try {
-    // Verifica e decodifica o token com a chave
     const decoded = jwt.verify(token, JWT_SECRET);
-    // Encontra o usuário pelo ID presente no token JWT
+    // Encontra o usuário pelo ID
     const user = await prisma.user.findUnique({ where: { id: decoded.userId } });
 
     if (!user) {
